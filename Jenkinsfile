@@ -33,7 +33,7 @@ pipeline {
                 script {
                     def DOCKER_IMAGE_NAME = 'mohitmarfatia/scientific-calculator'
                     echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
-                    sudo docker.build("${DOCKER_IMAGE_NAME}", '.')
+                    sh "sudo docker build -t ${DOCKER_IMAGE_NAME}:latest ."
                 }
             }
         }
@@ -42,7 +42,8 @@ pipeline {
             steps {
                 script {
                     def DOCKER_IMAGE_NAME = 'mohitmarfatia/scientific-calculator'
-                    echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
+                    echo "Pushing Docker Image: ${DOCKER_IMAGE_NAME}"
+
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         sh "echo $DOCKER_PASS | sudo docker login -u $DOCKER_USER --password-stdin"
                         sh "sudo docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
