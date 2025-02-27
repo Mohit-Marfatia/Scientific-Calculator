@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
+        DOCKER_IMAGE = "mt2024090/scientific-calculator" 
     }
 
     stages {
