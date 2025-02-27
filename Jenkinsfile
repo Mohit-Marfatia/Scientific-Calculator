@@ -33,7 +33,7 @@ pipeline {
                 script {
                     def DOCKER_IMAGE_NAME = 'mohitmarfatia/scientific-calculator'
                     echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
-                    docker.build("${DOCKER_IMAGE_NAME}", '.')
+                    sudo docker.build("${DOCKER_IMAGE_NAME}", '.')
                 }
             }
         }
@@ -43,9 +43,9 @@ pipeline {
                 script {
                     def DOCKER_IMAGE_NAME = 'mohitmarfatia/scientific-calculator'
                     echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
-                    docker.withRegistry('', 'docker-hub-credentials') {
-                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
-                        sh "docker push ${DOCKER_IMAGE_NAME}:latest"
+                    sudo docker.withRegistry('', 'docker-hub-credentials') {
+                        sh "sudo docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
+                        sh "sudo docker push ${DOCKER_IMAGE_NAME}:latest"
                     }
                 }
             }
