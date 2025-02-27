@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
-        DOCKER_IMAGE = "mt2024090/scientific-calculator" 
     }
 
     stages {
@@ -32,6 +31,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    def DOCKER_IMAGE_NAME = 'mohitmarfatia/scientific-calculator'
+                    echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
                     docker.build("${DOCKER_IMAGE_NAME}", '.')
                 }
             }
@@ -40,6 +41,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    def DOCKER_IMAGE_NAME = 'mohitmarfatia/scientific-calculator'
+                    echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
                     docker.withRegistry('', 'docker-hub-credentials') {
                         sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
                         sh "docker push ${DOCKER_IMAGE_NAME}:latest"
