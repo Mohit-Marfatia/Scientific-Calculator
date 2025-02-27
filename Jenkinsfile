@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Checking out source code...'
                 checkout scm
-                sh 'ls -la' 
+                sh 'ls -la'
             }
         }
 
@@ -30,20 +30,28 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker Image...'
-                sh 'docker build -t $DOCKER_IMAGE:latest .'
+                script {
+                    def DOCKER_IMAGE_NAME = 'mt2024090/scientific-calculator'
+                    echo "Building Docker Image: ${DOCKER_IMAGE_NAME}"
+                    sh "docker build -t ${DOCKER_IMAGE_NAME}:latest ."
+                }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                echo 'Pushing Docker Image to Docker Hub...'
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker push $DOCKER_IMAGE:latest'
+                script {
+                    def DOCKER_IMAGE_NAME = 'mt2024090/scientific-calculator'
+                    echo "Pushing Docker Image: ${DOCKER_IMAGE_NAME}"
+
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:latest"
+                    }
                 }
             }
         }
-
     }
 
     post {
