@@ -10,20 +10,21 @@ pipeline {
             steps {
                 echo 'Checking out source code...'
                 checkout scm
+                sh 'ls -la' 
             }
         }
 
         stage('Build') {
             steps {
                 echo 'Building the project with Maven...'
-                sh 'mvn clean package'
+                sh 'cd ScientificCalculator && mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running JUnit tests...'
-                sh 'mvn test'
+                sh 'cd ScientificCalculator && mvn test'
             }
         }
 
