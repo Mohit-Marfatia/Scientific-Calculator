@@ -31,16 +31,19 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker Image...'
-                sh 'docker build -t $DOCKER_IMAGE:latest .'
+                script {
+                    docker.build("${DOCKER_IMAGE_NAME}", '.')
+                }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                echo 'Pushing Docker Image to Docker Hub...'
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker push $DOCKER_IMAGE:latest'
+                script {
+                    docker.withRegistry('', 'docker-hub-credentials') {
+                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:latest"
+                    }
                 }
             }
         }
