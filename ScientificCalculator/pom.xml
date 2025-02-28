@@ -25,7 +25,6 @@
 
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin to ensure Java version is set -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -36,7 +35,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Maven JAR Plugin to create an executable JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -44,7 +42,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.Main</mainClass> <!-- Update this if your main class is different -->
+                            <mainClass>org.example.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
