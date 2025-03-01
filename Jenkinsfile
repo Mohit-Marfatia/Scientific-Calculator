@@ -66,12 +66,12 @@ pipeline {
 
     post {
         success {
-            mail to: 'marfatia.project@gmail.com',
+            mail to: 'marfatia.projects@gmail.com',
                  subject: "Application Deployment SUCCESS: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: "The build was successful!"
         }
         failure {
-            mail to: 'marfatia.project@gmail.com',
+            mail to: 'marfatia.projects@gmail.com',
                  subject: "Application Deployment FAILURE: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: "The build failed."
         }
