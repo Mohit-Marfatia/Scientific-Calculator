@@ -66,10 +66,17 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            mail to: 'mohitdilip.marfaita@iiitb.ac.in',
+                 subject: "Application Deployment SUCCESS: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "The build was successful!"
         }
         failure {
-            echo 'Pipeline failed. Check the logs for errors.'
+            mail to: 'mohitdilip.marfaita@iiitb.ac.in',
+                 subject: "Application Deployment FAILURE: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "The build failed."
+        }
+        always {
+            cleanWs()
         }
     }
 }
