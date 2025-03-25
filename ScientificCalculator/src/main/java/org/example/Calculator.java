@@ -10,7 +10,7 @@ public class Calculator {
 
     public static long factorial(int x) {
         if (x < 0) {
-            throw new IllegalArgumentException("Factorial is not defined for negative numbers.");
+            throw new IllegalArgumentException("Factorial is not defined for negative number.");
         }
         long fact = 1;
         for (int i = 1; i <= x; i++) {
